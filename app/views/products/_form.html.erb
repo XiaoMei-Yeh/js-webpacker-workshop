@@ -22,33 +22,146 @@
   </div>
 
   <div class="form-group">
-    <%= form.label :start_at %>
-    <%= form.datetime_select :start_at %>
-  </div>
+    <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
+         <input type="text" name="product[start_at]" class="form-control datetimepicker-input" data-target="#datetimepicker7"/>
+         <div class="input-group-append" data-target="#datetimepicker7" data-toggle="datetimepicker">
+             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+         </div>
+     </div>
+ </div>
 
-  <div class="form-group">
-    <%= form.label :end_at %>
-    <%= form.datetime_select :end_at, class: "form-control" %>
-  </div>
+ <div class="form-group">
+  <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
+       <input type="text" name="product[end_at]" class="form-control datetimepicker-input" data-target="#datetimepicker8"/>
+       <div class="input-group-append" data-target="#datetimepicker8" data-toggle="datetimepicker">
+           <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+       </div>
+   </div>
+</div>
+
+
+
+
+
+
+
 
   <div class="form-group">
     <%= form.label :currency %>
-    <select name="product[currency]" class= "form-control">
-      <option value="NTD">NTD</option>
-      <option value="USD">USD</option>
-      <option value="HKD">HKD</option>
+      <select class="js-example-basic-single form-control" name="product[currency]">
+        <option value="NTD">NTD</option>
+        <option value="USD">USD</option>
+        <option value="HKD">HKD</option>
+        <option value="RMB">RMB</option>
+        <option value="JPY">JPY</option>
     </select>
   </div>
 
   <div class="form-group">
     <%= form.label :tag_list %>
-    <select name="product[tag_list][]" multiple= 'true' class= "form-control">
-      <option value="tag1">tag1</option>
-      <option value="tag2">tag2</option>
-      <option value="tag3">tag3</option>
-    </select>
+      <select class="js-example-tokenizer form-control" multiple="multiple" name="product[tag_list][]">
+        <option value="tag1">tag1</option>
+        <option value="tag2">tag2</option>
+        <option value="tag3">tag3</option>
+      </select>
   </div>
   <div class="actions">
     <%= form.submit 'submit', class: 'btn btn-primary' %>
   </div>
 <% end %>
+
+
+
+<!-- input給name的屬性="abc" 存到params， 所以改為product[end_at]-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+  $(document).ready(function() {
+    $('.js-example-basic-single').select2();
+  });
+
+
+
+
+  $(".js-example-tokenizer").select2({
+    tags: true,
+    tokenSeparators: [',', ' ']
+  })
+
+  
+  
+  
+  $(".btn").click( function(e) {
+    e.preventDefault();
+    const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+      confirmButton: 'btn btn-success',
+      cancelButton: 'btn btn-danger'
+    },
+    buttonsStyling: false
+  })
+
+
+
+
+  swalWithBootstrapButtons.fire({
+    title: 'Are you sure?',
+    text: "You will create a product",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, Create',
+    cancelButtonText: 'No, Cancel',
+    reverseButtons: true
+  }).then((result) => {
+    // console.log(result)
+    if (result.value) {
+      swalWithBootstrapButtons.fire(
+        'Create!',
+        'Your product has been created.',
+        'success'
+      ).then( () => {
+        $('form').submit()
+      })
+    } else if (
+      result.dismiss === Swal.DismissReason.cancel
+    ) {
+      swalWithBootstrapButtons.fire(
+        'Cancelled',
+        'Your product has been deleted.',
+        'error'
+      )
+    }
+  })
+})
+
+
+
+  $(function () {
+    $('#datetimepicker7').datetimepicker();
+    $('#datetimepicker8').datetimepicker({
+        useCurrent: false
+    });
+    $("#datetimepicker7").on("change.datetimepicker", function (e) {
+        $('#datetimepicker8').datetimepicker('minDate', e.date);
+    });
+    $("#datetimepicker8").on("change.datetimepicker", function (e) {
+        $('#datetimepicker7').datetimepicker('maxDate', e.date);
+    });
+  });
+</script>
+  

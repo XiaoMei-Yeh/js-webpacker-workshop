@@ -17,3 +17,21 @@ require("channels")
 // const imagePath = (name) => images(name, true)
 import 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
+import 'jquery'
+import 'jquery/dist/jquery.js'
+import $ from 'jquery'
+window.$ = $
+import 'select2'
+import 'select2/dist/css/select2.css'
+import Swal from 'sweetalert2'
+window.Swal = Swal
+import 'font-awesome/css/font-awesome.css'
+import 'tempusdominus-bootstrap-4' 
+
+
+
+
+document.addEventListener('turbolinks: load', function() {
+  
+})
+
